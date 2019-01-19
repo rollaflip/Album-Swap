@@ -3,20 +3,25 @@ $(document).ready(function() {
   getAlbumsByUserId(1, 'left');
   getAlbumsByUserId(2, 'right');
 
-//Live Album Filter
-$('.filter').keyup(function() {
-    const filter = $(this).val()
-    const albumRowByParent = $(this).parent().children('.album__row')
+  //Live Album Filter
+  $('.filter').keyup(function() {
+    const filter = $(this).val();
+    const albumRowByParent = $(this)
+      .parent()
+      .children('.album__row');
 
     $(albumRowByParent).each(function() {
-      if ($(this).text().search(new RegExp(filter, 'i')) < 0) {
+      if (
+        $(this)
+          .text()
+          .search(new RegExp(filter, 'i')) < 0
+      ) {
         $(this).fadeOut();
       } else {
         $(this).show();
       }
     });
   });
-
 });
 const getUserById = async userId => {
   const url = 'https://jsonplaceholder.typicode.com/users/';
@@ -55,7 +60,7 @@ const swapAlbum = async (receivingUserId, albumId, direction) => {
   const url = 'https://jsonplaceholder.typicode.com/albums';
 
   try {
-    const swappedAlbum = await fetch(`${url}/${albumId}`, {
+    const album = await fetch(`${url}/${albumId}`, {
       method: 'PATCH',
       body: JSON.stringify({
         userId: receivingUserId,
@@ -63,9 +68,10 @@ const swapAlbum = async (receivingUserId, albumId, direction) => {
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
-    })
-      .then(response => response.json())
-      .then(json => console.log(json));
+    });
+    const json = await album.json();
+    console.log(json);
+    return json;
   } catch (error) {
     return error;
   }
@@ -77,27 +83,31 @@ function allowDrop(ev) {
 
 function drag(ev) {
   ev.dataTransfer.setData('text', ev.target.id);
-  // let user = ev.target.getAttribute('data-value')
-  // ev.dataTransfer.setData("user", user);
+  //   console.log(ev.target.getAttribute('data-value'))
+  //change .drop__zone of other table
 }
 
-function drop(ev) {
+async function drop(ev) {
   ev.preventDefault();
   let data = ev.dataTransfer.getData('text');
   //   let userId = ev.dataTransfer.getData("user");
   //   let userId = ev.dataTransfer.getAttribute('data-value')
   let userId = ev.currentTarget.getAttribute('data-value');
+  let dropZone = ev.currentTarget;
 
-  swapAlbum(userId, data);
-  ev.currentTarget.appendChild(document.getElementById(data));
+  const droppedAlbum = await swapAlbum(userId, data);
+  const idToFind = String(droppedAlbum.id);
+  dropZone.appendChild(document.getElementById(idToFind));
+
+  //remove drop zone border
 }
-
-
 
 // function submitHandler(e){
 
 // }
-$('button').click(function(){
-    var value = $('button').siblings('input').val();
-    alert(value);
-})
+$('button').click(function() {
+  var value = $('button')
+    .siblings('input')
+    .val();
+  alert(value);
+});

@@ -72,3 +72,6 @@ main {
     margin-right: 0px;
 }
 
+.drop__zone{
+    border: 5px solid greenyellow;
+}
