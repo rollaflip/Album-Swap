@@ -49,6 +49,10 @@ main {
     border-bottom: 1px solid #333;
     /* height: 75px; */
 }
+.table__row:hover:not(.table__header) {
+    opacity: 0.85;
+    background-color: red;
+  }
 .table__row:last-child {
     border-bottom: 0
 }
@@ -63,3 +67,4 @@ main {
 .table__cell:last-child {
     margin-right: 0px;
 }
+
