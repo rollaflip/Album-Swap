@@ -47,6 +47,7 @@ main {
     display: flex;
     padding: 5px;
     border-bottom: 1px solid #333;
+    /* height: 75px; */
 }
 .table__row:last-child {
     border-bottom: 0
