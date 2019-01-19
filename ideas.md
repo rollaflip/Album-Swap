@@ -1,4 +1,5 @@
 dynamically sort each table by id
+- sort divs on drop
 
 Change vanilla JS to Jquery
 

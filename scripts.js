@@ -3,14 +3,14 @@ $(document).ready(function() {
   getAlbumsByUserId(1, 'left');
   getAlbumsByUserId(2, 'right');
 
-
+//Live Album Filter
 $('.filter').keyup(function() {
     const filter = $(this).val()
+    const albumRowByParent = $(this).parent().children('.album__row')
 
-    $('.album__row').each(function() {
+    $(albumRowByParent).each(function() {
       if ($(this).text().search(new RegExp(filter, 'i')) < 0) {
         $(this).fadeOut();
-
       } else {
         $(this).show();
       }
