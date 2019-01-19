@@ -3,16 +3,19 @@ $(document).ready(function() {
   getAlbumsByUserId(1, 'left');
   getAlbumsByUserId(2, 'right');
 
-  const filterAlbums = (whichTable, query) =>
-  $(`#${whichTable} .album__row:not(:contains("${query}"))`).hide();
 
-  $('button').click(function(){
-    var value = $(this).prev().val();
-    // alert(value);
-    console.log(value)
-    const whichTable = $(this).parent().attr("id")
-    filterAlbums(whichTable, value)
-})
+$('.filter').keyup(function() {
+    const filter = $(this).val()
+
+    $('.album__row').each(function() {
+      if ($(this).text().search(new RegExp(filter, 'i')) < 0) {
+        $(this).fadeOut();
+
+      } else {
+        $(this).show();
+      }
+    });
+  });
 
 });
 const getUserById = async userId => {

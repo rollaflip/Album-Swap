@@ -16,12 +16,10 @@
 //   }
 // };
 
-
 //Hard Code add/remove  /////
 //   const tableToAdd = direction === 'left' ? '#user-1' : '#user-2';
 //   const tableToRemove = direction === 'left' ? '#user-2' : '#user-1';
 //   if (!receivingUserId > 0) throw new Error('User Id must be > 0');
-
 
 //     $(`#${swappedAlbum.id}`).remove();
 //     $(tableToAdd).append(`
@@ -30,9 +28,6 @@
 //     <div class='table__cell table__cell'>${swappedAlbum.title}</div>
 // </div>
 //       `);
-
-
-
 
 //   Error handling???////
 
@@ -57,3 +52,16 @@
 //         jqxhr.always(function() {
 //           alert( "second finished" );
 //         });
+
+
+// Click Button Filter
+//   const filterAlbums = (whichTable, query) =>
+//   $(`#${whichTable} .album__row:not(:contains("${query}"))`).hide();
+
+//   $('button').click(function(){
+//     var value = $(this).prev().val();
+//     // alert(value);
+//     console.log(value)
+//     const whichTable = $(this).parent().attr("id")
+//     filterAlbums(whichTable, value)
+// })
