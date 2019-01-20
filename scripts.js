@@ -70,7 +70,6 @@ const swapAlbum = async (receivingUserId, albumId, direction) => {
       },
     });
     const json = await album.json();
-    console.log(json);
     return json;
   } catch (error) {
     return error;
@@ -82,29 +81,31 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-  ev.dataTransfer.setData('text', ev.target.id);
-  //   console.log(ev.target.getAttribute('data-value'))
-  //change .drop__zone of other table
+  ev.dataTransfer.setData('text', ev.target.id,0);
+
+
+  const dragParentId = $(ev.target).parent().attr('id')
+  const otherTable =  dragParentId === 'user-2' ? '#user-1' : '#user-2';
+  $(otherTable).addClass('drop__zone')
+  ev.dataTransfer.setData('green-border', otherTable,1);
 }
 
 async function drop(ev) {
   ev.preventDefault();
   let data = ev.dataTransfer.getData('text');
-  //   let userId = ev.dataTransfer.getData("user");
-  //   let userId = ev.dataTransfer.getAttribute('data-value')
-  let userId = ev.currentTarget.getAttribute('data-value');
+
   let dropZone = ev.currentTarget;
+  let userId = dropZone.getAttribute('data-value');
 
   const droppedAlbum = await swapAlbum(userId, data);
   const idToFind = String(droppedAlbum.id);
   dropZone.appendChild(document.getElementById(idToFind));
 
-  //remove drop zone border
+  const thisTable =  dropZone.id === 'user-1' ? '#user-1' : '#user-2';
+  $(thisTable).removeClass('drop__zone')
 }
 
-// function submitHandler(e){
 
-// }
 $('button').click(function() {
   var value = $('button')
     .siblings('input')
