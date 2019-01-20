@@ -1,9 +1,19 @@
+html {
+  /* background-color: #efefef; */
+  background-image: url('https://images.unsplash.com/photo-1420161900862-9a86fa1f5c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');
+
+
+  /* background-image: url("https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"); */
+
+  /* background-image: url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1651&q=80') */
+    /* no-repeat center center fixed; */
+
+}
+
 body {
   font-family: 'Helvetica', 'Arial', sans-serif;
   padding: 0 50px;
-  background-color: #efefef;
-  background-image: url("https://images.unsplash.com/photo-1420161900862-9a86fa1f5c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
-margin: 5px;
+  margin: 5px;
 }
 
 main {
@@ -22,7 +32,7 @@ button {
   /* background-color: rgb(30, 215, 96); */
   background-color: #efefef;
   border-radius: 5px;
-  margin: 5px;
+  margin-bottom: 5px;
 }
 
 .title {
@@ -37,22 +47,38 @@ button {
 
 .search {
   text-align: center;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 .search__label {
   font-weight: bold;
   font-size: 18px;
 }
 .search__input {
-  padding: 5px;
+  padding: 3px;
   border: 1px solid #333;
+  margin-bottom: 5px;
+}
+.search.input:focus:invalid {
+  /* insert your own styles for invalid form input */
+  -moz-box-shadow: none;
+  background-color: red
 }
 .search__button {
   display: inline-block;
-  height: 30px;
-  padding: 5px;
+  height: auto;
+  padding: 3px;
   border: 1px solid #333;
-  background-color: white;
+  background-color: rgb(30, 215, 95);
+}
+.filter{
+  float: right;
+  /* background-color: rgb(30, 215, 95); */
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid rgb(30, 215, 95);
+  caret-color:rgb(30, 215, 95);
+  outline-color: rgb(30, 215, 95);
+  outline-style: none;
 }
 
 .table {
@@ -64,7 +90,7 @@ button {
 .table h3 {
   text-align: center;
   /* padding: 1px; */
-  margin: 5px;
+  margin: 8px;
 }
 .table__header {
   background-color: #333;
@@ -80,7 +106,7 @@ button {
 }
 .table__row:hover:not(.table__header) {
   opacity: 0.85;
-  background-color: red;
+  background-color: rgb(30, 215, 95) !important;
 }
 .table__row:last-child {
   border-bottom: 0;
@@ -102,5 +128,5 @@ button {
 }
 
 .drop__zone {
-  border: 3px dotted green;
+  border: 3px solid  rgb(30, 215, 95);
 }

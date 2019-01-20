@@ -8,6 +8,7 @@ $(document).ready(function() {
     const filter = $(this).val();
     const albumRowByParent = $(this)
       .parent()
+      .parent('.table')
       .children('.album__row');
 
     $(albumRowByParent).each(function() {
@@ -20,19 +21,31 @@ $(document).ready(function() {
       } else $(this).show();
     });
   });
-  $('#user-submit').click(() =>{
+
+  $('#user-submit').click(() => {
     var value = $('#user-submit')
       .siblings('input')
       .val();
-    alert(value);
+    if (value < 2 || value > 10) {
+      alert('User Id must be between 2 and 10');
+      // throw new Error('User Id must be between 2 and 10');
+    } else {
+      getUserById(value);
+      getAlbumsByUserId(value, 'right');
+    }
   });
 });
 const getUserById = async userId => {
   const url = 'https://jsonplaceholder.typicode.com/users/';
+
   try {
     const user = await $.get(`${url}${userId}?`, data => {
-      console.log(data.name);
+      data;
     });
+    console.log(user.name);
+    $('#their-name').text(
+      `${user.name.split(' ')[user.name.split(' ').length - 2]}'s Albums`
+    );
   } catch (error) {
     return error;
   }
@@ -40,16 +53,18 @@ const getUserById = async userId => {
 const getAlbumsByUserId = async (userId, direction) => {
   const url = 'https://jsonplaceholder.typicode.com/albums';
   const whichTable = direction === 'left' ? '#user-1' : '#user-2';
-  if (!userId > 0) throw new Error('User Id must be > 0');
+
   try {
+    $(whichTable).children('.album__row').remove();
     const albums = await $.get(`${url}?userId=${userId}`);
-    // .fail(()=> {alert( "error" )});
-    console.log(albums);
+
     albums.map(album => {
       $(whichTable).append(`
-        <div class='table__row album__row' id="${album.id}" data-value="${album}" draggable="true" ondragstart="drag(event)" >
-            <div class='table__cell table__cell--short' >${album.id}</div>
-            <div class='table__cell table__cell'>${album.title}</div>
+        <div class='table__row album__row' id="${
+          album.id
+        }" data-value="${album}" draggable="true" ondragstart="drag(event)" >
+        <div class='table__cell table__cell--short' >${album.id}</div>
+        <div class='table__cell table__cell'>${album.title}</div>
         </div>
         `);
     });
@@ -83,13 +98,14 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-  ev.dataTransfer.setData('text', ev.target.id,0);
+  ev.dataTransfer.setData('text', ev.target.id, 0);
 
-
-  const dragParentId = $(ev.target).parent().attr('id')
-  const otherTable =  dragParentId === 'user-2' ? '#user-1' : '#user-2';
-  $(otherTable).addClass('drop__zone')
-  ev.dataTransfer.setData('green-border', otherTable,1);
+  const dragParentId = $(ev.target)
+    .parent()
+    .attr('id');
+  const otherTable = dragParentId === 'user-2' ? '#user-1' : '#user-2';
+  $(otherTable).addClass('drop__zone');
+  ev.dataTransfer.setData('green-border', otherTable, 1);
 }
 
 async function drop(ev) {
@@ -103,9 +119,6 @@ async function drop(ev) {
   const idToFind = String(droppedAlbum.id);
   dropZone.appendChild(document.getElementById(idToFind));
 
-  const thisTable =  dropZone.id === 'user-1' ? '#user-1' : '#user-2';
-  $(thisTable).removeClass('drop__zone')
+  const thisTable = dropZone.id === 'user-1' ? '#user-1' : '#user-2';
+  $(thisTable).removeClass('drop__zone');
 }
-
-
-

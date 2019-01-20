@@ -21,15 +21,18 @@
         </div>
         <div class='search'>
             <label class='search__label'></label>
-            <input class='search__input' type='text' placeholder="Swap with another"></input>
+            <input class='search__input' type='text' placeholder="Find User by Id #" type="number"  min="2" max="10"></input>
             <button class='search__button' id='user-submit' type='submit'>Search</button>
         </div>
     </div>
     <main>
         <div class='table' id="user-1" data-value=1 ondragover="allowDrop(event)" ondrop="drop(event)" >
-                <h3 >Your Albums</h3>
-                <input class='search__input filter' type='text' placeholder="Search by Title"></input>
-                <button class='search__button' type='submit'>Search By Title</button>
+            <div class="titlde">
+
+                <input class=' filter' type='text' placeholder="Search by Title"></input>
+                <h3 class="titlle">Your Albums </h3>
+                <!-- <button class='search__button' type='submit'>Search By Title</button> -->
+            </div>
 
             <div class='table__row table__header'>
                 <div class='table__cell table__cell--short'>id</div>
@@ -38,9 +41,12 @@
         </div>
 
         <div class='table' id="user-2" data-value=2 ondragover="allowDrop(event)" ondrop="drop(event)">
-                <h3 >Their Albums</h3>
-                <input class='search__input filter' type='text' placeholder="Search by Title"></input>
-                <button class='search__button' type='submit'>Search By Title</button>
+            <div>
+
+                <input class='filter' type='text' placeholder="Search by Title"></input>
+                <h3 id="their-name">Ervin's Albums</h3>
+                <!-- <button class='search__button' type='submit'>Search By Title</button> -->
+            </div>
             <div class='table__row table__header'>
                 <div class='table__cell table__cell--short'>id</div>
                 <div class='table__cell'>title</div>
