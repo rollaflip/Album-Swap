@@ -17,10 +17,14 @@ $(document).ready(function() {
           .search(new RegExp(filter, 'i')) < 0
       ) {
         $(this).fadeOut();
-      } else {
-        $(this).show();
-      }
+      } else $(this).show();
     });
+  });
+  $('#user-submit').click(() =>{
+    var value = $('#user-submit')
+      .siblings('input')
+      .val();
+    alert(value);
   });
 });
 const getUserById = async userId => {
@@ -43,9 +47,7 @@ const getAlbumsByUserId = async (userId, direction) => {
     console.log(albums);
     albums.map(album => {
       $(whichTable).append(`
-        <div class='table__row album__row' id="${
-          album.id
-        }" data-value="${album}" draggable="true" ondragstart="drag(event)" >
+        <div class='table__row album__row' id="${album.id}" data-value="${album}" draggable="true" ondragstart="drag(event)" >
             <div class='table__cell table__cell--short' >${album.id}</div>
             <div class='table__cell table__cell'>${album.title}</div>
         </div>
@@ -106,9 +108,4 @@ async function drop(ev) {
 }
 
 
-$('button').click(function() {
-  var value = $('button')
-    .siblings('input')
-    .val();
-  alert(value);
-});
+
