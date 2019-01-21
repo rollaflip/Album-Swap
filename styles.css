@@ -108,7 +108,7 @@ button {
 }
 .table__row:hover:not(.table__header) {
   opacity: 0.85;
-  /* background-color: rgb(30, 215, 95) !important; */
+  background-color: rgb(30, 215, 95) !important;
   /* background-color: rgba(30, 215, 95, 0.438) !important; */
 }
 .table__row:last-child {
@@ -135,5 +135,5 @@ button {
 }
 
 .selected {
-  background:red !important;
+  background:rgb(30, 215, 95) !important;
 }

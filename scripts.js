@@ -3,15 +3,13 @@ $(document).ready(function() {
   getAlbumsByUserId(1, 'left');
   getAlbumsByUserId(2, 'right');
 
- ////////////////// change selected to red
- $("body").on("click", ".album__row", function () {
+  ////////////////// change selected to red
+  $('body').on('click', '.album__row', function() {
+    if (this.className.indexOf('selected') < 0) dragArr.add(this.id);
+    else dragArr.delete(this.id);
 
-     if(this.className.indexOf('selected')<0) dragArr.add(this.id)
-     else dragArr.delete(this.id)
-
-
-         $(this).toggleClass("selected");
-     console.log(dragArr)
+    $(this).toggleClass('selected');
+    console.log(dragArr);
   });
 
   //Live Album Filter
@@ -44,10 +42,8 @@ $(document).ready(function() {
       getUserById(value);
       getAlbumsByUserId(value, 'right');
     }
+  });
 });
-});
-
-
 
 const getUserById = async userId => {
   const url = 'https://jsonplaceholder.typicode.com/users/';
@@ -66,12 +62,13 @@ const getUserById = async userId => {
 };
 const getAlbumsByUserId = async (userId, direction) => {
   const url = 'https://jsonplaceholder.typicode.com/albums';
-  const whichTable = direction === 'left' ? '#user-1' : '#user-2';
+  const whichTable = direction === 'left' ? '#table-1' : '#table-2';
 
   try {
-    $(whichTable).children('.album__row').remove();
+    $(whichTable)
+      .children('.album__row')
+      .remove();
     const albums = await $.get(`${url}?userId=${userId}`);
-
 
     albums.map(album => {
       $(whichTable).append(`
@@ -108,45 +105,43 @@ const swapAlbum = async (receivingUserId, albumId, direction) => {
   }
 };
 
-let dragArr = new Set()
+let dragArr = new Set();
 
 function allowDrop(ev) {
   ev.preventDefault();
 }
 
 function drag(ev) {
-
-    console.log(ev.target)
   ev.dataTransfer.setData('text', ev.target.id, 0);
 
   const dragParentId = $(ev.target)
     .parent()
     .attr('id');
-  const otherTable = dragParentId === 'user-2' ? '#user-1' : '#user-2';
+  const otherTable = dragParentId === 'table-2' ? '#table-1' : '#table-2';
   $(otherTable).addClass('drop__zone');
   ev.dataTransfer.setData('green-border', otherTable, 1);
 }
 
 async function drop(ev) {
-    // $('#user-1').append($('.album__row'))
   ev.preventDefault();
   let data = ev.dataTransfer.getData('text');
-console.log(data)
   let dropZone = ev.currentTarget;
   let userId = dropZone.getAttribute('data-value');
 
-  const droppedAlbum = await swapAlbum(userId, data);
-  const idToFind = String(droppedAlbum.id);
+  [...dragArr].forEach(async albumId => {
+      const droppedAlbum = await swapAlbum(userId, albumId);
+      const idToFind = String(droppedAlbum.id);
+      console.log(droppedAlbum);
+      //idToFind is the New Owners ID
+      dropZone.appendChild(document.getElementById(idToFind));
+    });
+    droppedAlbum = await swapAlbum(userId, data);
+    idToFind = String(droppedAlbum.id);
+    dropZone.appendChild(document.getElementById(idToFind));
 
-  [...dragArr].forEach(ele => dropZone.appendChild(document.getElementById(ele)))
-//   dropZone.appendChild(document.getElementById(idToFind));
-
-  const thisTable = dropZone.id === 'user-1' ? '#user-1' : '#user-2';
+  const thisTable = dropZone.id === 'table-1' ? '#table-1' : '#table-2';
   $(thisTable).removeClass('drop__zone');
-  setTimeout(()=> $('.album__row').removeClass("selected"),700)
-
-
+  dragArr = new Set()
+  $(`#${idToFind}`).addClass('selected')
+  setTimeout(() => $('.album__row').removeClass('selected'), 600);
 }
-
-
-

@@ -37,3 +37,5 @@ getAlbums is called to
 
 Show user name/ number on right column
 change names of tables to table 1 & table two
+
+6 - multi drap

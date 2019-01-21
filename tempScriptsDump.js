@@ -65,3 +65,27 @@
 //     const whichTable = $(this).parent().attr("id")
 //     filterAlbums(whichTable, value)
 // })
+
+
+// Old drop func
+
+async function drop(ev) {
+  // $('#table-1').append($('.album__row'))
+ev.preventDefault();
+let data = ev.dataTransfer.getData('text');
+console.log(data)
+let dropZone = ev.currentTarget;
+let userId = dropZone.getAttribute('data-value');
+
+const droppedAlbum = await swapAlbum(userId, data);
+const idToFind = String(droppedAlbum.id);
+
+[...dragArr].forEach(ele => dropZone.appendChild(document.getElementById(ele)))
+//   dropZone.appendChild(document.getElementById(idToFind));
+
+const thisTable = dropZone.id === 'table-1' ? '#table-1' : '#table-2';
+$(thisTable).removeClass('drop__zone');
+setTimeout(()=> $('.album__row').removeClass("selected"),700)
+
+
+}
