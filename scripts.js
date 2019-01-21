@@ -3,6 +3,17 @@ $(document).ready(function() {
   getAlbumsByUserId(1, 'left');
   getAlbumsByUserId(2, 'right');
 
+ ////////////////// change selected to red
+ $("body").on("click", ".album__row", function () {
+
+     if(this.className.indexOf('selected')<0) dragArr.add(this.id)
+     else dragArr.delete(this.id)
+
+
+         $(this).toggleClass("selected");
+     console.log(dragArr)
+  });
+
   //Live Album Filter
   $('.filter').keyup(function() {
     const filter = $(this).val();
@@ -33,8 +44,11 @@ $(document).ready(function() {
       getUserById(value);
       getAlbumsByUserId(value, 'right');
     }
-  });
 });
+});
+
+
+
 const getUserById = async userId => {
   const url = 'https://jsonplaceholder.typicode.com/users/';
 
@@ -57,6 +71,7 @@ const getAlbumsByUserId = async (userId, direction) => {
   try {
     $(whichTable).children('.album__row').remove();
     const albums = await $.get(`${url}?userId=${userId}`);
+
 
     albums.map(album => {
       $(whichTable).append(`
@@ -93,11 +108,15 @@ const swapAlbum = async (receivingUserId, albumId, direction) => {
   }
 };
 
+let dragArr = new Set()
+
 function allowDrop(ev) {
   ev.preventDefault();
 }
 
 function drag(ev) {
+
+    console.log(ev.target)
   ev.dataTransfer.setData('text', ev.target.id, 0);
 
   const dragParentId = $(ev.target)
@@ -109,16 +128,25 @@ function drag(ev) {
 }
 
 async function drop(ev) {
+    // $('#user-1').append($('.album__row'))
   ev.preventDefault();
   let data = ev.dataTransfer.getData('text');
-
+console.log(data)
   let dropZone = ev.currentTarget;
   let userId = dropZone.getAttribute('data-value');
 
   const droppedAlbum = await swapAlbum(userId, data);
   const idToFind = String(droppedAlbum.id);
-  dropZone.appendChild(document.getElementById(idToFind));
+
+  [...dragArr].forEach(ele => dropZone.appendChild(document.getElementById(ele)))
+//   dropZone.appendChild(document.getElementById(idToFind));
 
   const thisTable = dropZone.id === 'user-1' ? '#user-1' : '#user-2';
   $(thisTable).removeClass('drop__zone');
+  setTimeout(()=> $('.album__row').removeClass("selected"),700)
+
+
 }
+
+
+

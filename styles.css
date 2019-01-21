@@ -108,7 +108,8 @@ button {
 }
 .table__row:hover:not(.table__header) {
   opacity: 0.85;
-  background-color: rgb(30, 215, 95) !important;
+  /* background-color: rgb(30, 215, 95) !important; */
+  /* background-color: rgba(30, 215, 95, 0.438) !important; */
 }
 .table__row:last-child {
   border-bottom: 0;
@@ -131,4 +132,8 @@ button {
 
 .drop__zone {
   border: 3px solid  rgb(30, 215, 95);
+}
+
+.selected {
+  background:red !important;
 }
