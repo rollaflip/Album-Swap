@@ -6,8 +6,7 @@ $(document).ready(function() {
   $('.filter').keyup(function() {
     const filter = $(this).val();
     const albumRowByParent = $(this)
-      .parent()
-      .parent('.table')
+      .closest('.table').children()
       .children('.album__row');
 
     $(albumRowByParent).each(function() {
@@ -108,8 +107,9 @@ const allowDrop = ev => ev.preventDefault();
 
 const drag = (ev) =>{
   ev.dataTransfer.setData('text', ev.target.id);
-  const originTableId = $(ev.target).parent().attr('id');
-  const dropZone = originTableId === 'table-2' ? 'table-1' : '#table-2';
+  const originTableId = $(ev.target).closest('.table').attr('id');
+  console.log(originTableId)
+  const dropZone = originTableId === 'table-2' ? '#table-1' : '#table-2';
   $(dropZone).addClass('drop__zone');
 }
 
