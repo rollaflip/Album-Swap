@@ -108,7 +108,6 @@ const allowDrop = ev => ev.preventDefault();
 const drag = (ev) =>{
   ev.dataTransfer.setData('text', ev.target.id);
   const originTableId = $(ev.target).closest('.table').attr('id');
-  console.log(originTableId)
   const dropZone = originTableId === 'table-2' ? '#table-1' : '#table-2';
   $(dropZone).addClass('drop__zone');
 }
@@ -124,14 +123,12 @@ const drop = async ev => {
     $(`#${dropZone.id} > #albums`).append($(`#${droppedAlbum.id}`));
   });
   droppedAlbum = await swapAlbum(userId, data);
-  console.log(dropZone.id)
   $(`#${dropZone.id} > #albums`).append($(`#${droppedAlbum.id}`));
 
   $('.table').removeClass('drop__zone');
   multiSelect = new Set();
   $(`#${droppedAlbum.id}`).addClass('selected');
   setTimeout(() => $('.album__row').removeClass('selected'), 600);
- console.log(dropZone.id)
 
   $(`#${dropZone.id} > #albums`).animate({
     scrollTop: 1000 }, 'slow')
