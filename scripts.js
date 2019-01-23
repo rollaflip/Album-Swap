@@ -1,6 +1,6 @@
 $(document).ready(function() {
-  getAlbumsByUserId(1, '#table-1');
-  getAlbumsByUserId(2, '#table-2');
+  getAlbumsByUserId(1, 'table-1');
+  getAlbumsByUserId(2, 'table-2');
 
   //Live Album Filter
   $('.filter').keyup(function() {
@@ -66,11 +66,11 @@ const getAlbumsByUserId = async (userId, whichTable) => {
   const url = 'https://jsonplaceholder.typicode.com/albums';
 
   try {
-    $(whichTable).children('.album__row').remove();
+    $(`#${whichTable} > #albums`).children('.album__row').remove();
     const albums = await $.get(`${url}?userId=${userId}`);
 
     albums.map(album => {
-      $(whichTable).append(`
+      $(`#${whichTable} > #albums`).append(`
         <div class='table__row album__row'
             id="${album.id}"
             data-value="${album}" draggable="true" ondragstart="drag(event)">
@@ -109,8 +109,7 @@ const allowDrop = ev => ev.preventDefault();
 const drag = (ev) =>{
   ev.dataTransfer.setData('text', ev.target.id);
   const originTableId = $(ev.target).parent().attr('id');
-  const dropZone = originTableId === 'table-2' ? '#table-1' : '#table-2';
-
+  const dropZone = originTableId === 'table-2' ? 'table-1' : '#table-2';
   $(dropZone).addClass('drop__zone');
 }
 
@@ -122,13 +121,18 @@ const drop = async ev => {
 
   [...multiSelect].map(async albumId => {
     const droppedAlbum = await swapAlbum(userId, albumId);
-    dropZone.appendChild(document.getElementById(droppedAlbum.id));
+    $(`#${dropZone.id} > #albums`).append($(`#${droppedAlbum.id}`));
   });
   droppedAlbum = await swapAlbum(userId, data);
-  dropZone.appendChild(document.getElementById(droppedAlbum.id));
+  console.log(dropZone.id)
+  $(`#${dropZone.id} > #albums`).append($(`#${droppedAlbum.id}`));
 
   $('.table').removeClass('drop__zone');
   multiSelect = new Set();
   $(`#${droppedAlbum.id}`).addClass('selected');
   setTimeout(() => $('.album__row').removeClass('selected'), 600);
+ console.log(dropZone.id)
+
+  $(`#${dropZone.id} > #albums`).animate({
+    scrollTop: 1000 }, 'slow')
 }
