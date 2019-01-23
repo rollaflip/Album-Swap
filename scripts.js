@@ -1,6 +1,6 @@
 $(document).ready(function() {
-  getAlbumsByUserId(1, 'left');
-  getAlbumsByUserId(2, 'right');
+  getAlbumsByUserId(1, '#table-1');
+  getAlbumsByUserId(2, '#table-2');
 
   //Live Album Filter
   $('.filter').keyup(function() {
@@ -11,35 +11,43 @@ $(document).ready(function() {
       .children('.album__row');
 
     $(albumRowByParent).each(function() {
-      if (
-        $(this)
-          .text()
-          .search(new RegExp(filter, 'i')) < 0
-      ) {
+      if ($(this).text().search(new RegExp(filter, 'i')) < 0) {
         $(this).fadeOut();
       } else $(this).show();
     });
   });
 
-  $('#user-submit').click(() => {
-    const value = $('#user-submit').siblings('input').val();
+  //User Search Submit Button Handler
+  $('#user-submit').click(function(){
+    const value = $(this).siblings('input').val();
+    const message = "#invalid-message"
+    const inputField = $(this).siblings('input')
+
     if (value < 2 || value > 10) {
-        alert('User Id must be between 2 and 10');
-    } else {
-      getUserById(value);
-      getAlbumsByUserId(value, 'right');
-    }
+      if($(message > ".hidden")) $(message).removeClass("hidden")
+      } else {
+        $(message).addClass('hidden')
+        getUserById(value);
+        getAlbumsByUserId(value, '#table-2');
+      }
+      inputField.val("")
   });
-   //Highlight selected albums
-   $('body').on('click', '.album__row', function() {
+
+   //User Search Input "Enter" Key Handler
+  $("#search-input").on("keyup", (event) => {
+    event.preventDefault();
+    if (event.keyCode === 13) $("#user-submit").click();
+  });
+
+  //Highlight Selected Albums
+  $('body').on('click', '.album__row', function() {
     if (!$(this).hasClass('selected')) multiSelect.add(this.id);
     else multiSelect.delete(this.id);
-
     $(this).toggleClass('selected');
-    // console.log(multiSelect);
   });
 });
 
+//User GET
 const getUserById = async userId => {
   const url = 'https://jsonplaceholder.typicode.com/users/';
 
@@ -53,9 +61,9 @@ const getUserById = async userId => {
   }
 };
 
-const getAlbumsByUserId = async (userId, direction) => {
+//Album GET By UserID
+const getAlbumsByUserId = async (userId, whichTable) => {
   const url = 'https://jsonplaceholder.typicode.com/albums';
-  const whichTable = direction === 'left' ? '#table-1' : '#table-2';
 
   try {
     $(whichTable).children('.album__row').remove();
@@ -76,6 +84,7 @@ const getAlbumsByUserId = async (userId, direction) => {
   }
 };
 
+//Album Swap PATCH
 const swapAlbum = async (receivingUserId, albumId, direction) => {
   const url = 'https://jsonplaceholder.typicode.com/albums';
 
@@ -91,8 +100,10 @@ const swapAlbum = async (receivingUserId, albumId, direction) => {
   }
 };
 
+//Stores Multi-Drop Albums
 let multiSelect = new Set();
 
+//Drag & Drop Functions
 const allowDrop = ev => ev.preventDefault();
 
 const drag = (ev) =>{

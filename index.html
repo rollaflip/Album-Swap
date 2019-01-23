@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <title class="title">Album Swap</title>
 
     <link rel='stylesheet' href='https://necolas.github.io/normalize.css/7.0.0/normalize.css' />
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel='stylesheet' href='styles.css' />
+    <link rel="icon" type="image/x-icon" href="./cd.png">
 
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='scripts.js'></script>
@@ -14,25 +14,21 @@
 
 <body>
     <div class="header">
-
         <div class="title">
-            <!-- <img class="logo" src="https://res-2.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1470182220/oqlnuq7efp07gpp8jkaj.png" alt=""> -->
             <h1> Album Swap</h1>
-
         </div>
         <div class='search'>
             <label class='search__label'></label>
-            <input class='search__input' type='text' placeholder="Find User by Id #" type="number"  min="2" max="10"></input>
+            <input class='search__input' id="search-input" type='text' placeholder="Find User by ID #" type="number"  min="2" max="10"></input>
             <button class='search__button' id='user-submit' type='submit'>Search</button>
+            <p class="hidden" id="invalid-message">User ID must be between 2 and 10</p>
         </div>
     </div>
     <main>
         <div class='table' id="table-1" data-value=1 ondragover="allowDrop(event)" ondrop="drop(event)" >
-            <div class="titlde">
-
+            <div>
                 <input class=' filter' type='text' placeholder="Search by Title"></input>
                 <h3 class="titlle">Your Albums </h3>
-                <!-- <button class='search__button' type='submit'>Search By Title</button> -->
             </div>
 
             <div class='table__row table__header'>
@@ -43,10 +39,8 @@
 
         <div class='table' id="table-2" data-value=2 ondragover="allowDrop(event)" ondrop="drop(event)">
             <div>
-
                 <input class='filter' type='text' placeholder="Search by Title"></input>
                 <h3 id="their-name">Ervin's Albums</h3>
-                <!-- <button class='search__button' type='submit'>Search By Title</button> -->
             </div>
             <div class='table__row table__header'>
                 <div class='table__cell table__cell--short'>id</div>
