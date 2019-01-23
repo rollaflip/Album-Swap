@@ -28,13 +28,3 @@ Allow users to swap albums between any users that the API has access to.
 6. DRAG AND DROP IN BULK
 Allow users to select multiple rows, and drag them together in bulk. You’ll still have to make a PUT request for each one separately though.
 
-
-change on hover to grey for all
-hold cmd to select multiple
-turn selected items green -> add to temp arr,
-//or add class= multi__grab
-
-cmd released - turn back to normal and remove from arr or remove multi__grab
-
-
-keep green w set time out when dropped
