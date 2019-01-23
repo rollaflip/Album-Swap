@@ -76,11 +76,11 @@ button {
   border: 1px solid #333;
   background-color: white;
   border-radius: 5px;
-
+  /* max-height: 400px; */
 }
 #albums{
   overflow: scroll;
-  height: 400px;
+  max-height: 400px;
   -webkit-overflow-scrolling: touch;
 }
 .table h3 {

@@ -28,7 +28,7 @@ $(document).ready(function() {
       } else {
         $(message).addClass('hidden')
         getUserById(value);
-        getAlbumsByUserId(value, '#table-2');
+        getAlbumsByUserId(value, 'table-2');
       }
       inputField.val("")
   });
@@ -66,7 +66,7 @@ const getAlbumsByUserId = async (userId, whichTable) => {
   const url = 'https://jsonplaceholder.typicode.com/albums';
 
   try {
-    $(`#${whichTable} > #albums`).children('.album__row').remove();
+    $(`#${whichTable}`).children('#albums').children().remove();
     const albums = await $.get(`${url}?userId=${userId}`);
 
     albums.map(album => {
