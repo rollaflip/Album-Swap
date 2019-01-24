@@ -109,7 +109,7 @@ button {
   font-size: 14px;
 }
 .table__row.album__row:nth-child(even) {
-  background: rgba(128, 128, 128, 0.281);
+  background: rgba(128, 128, 128, 0.322);
 }
 .table__row:hover:not(.table__header) {
   opacity: 0.85;

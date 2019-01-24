@@ -65,11 +65,11 @@ const getAlbumsByUserId = async (userId, whichTable) => {
   const url = 'https://jsonplaceholder.typicode.com/albums';
 
   try {
-    $(`#${whichTable}`).children('#albums').children().remove();
+    $(`#${whichTable}`).children('.albums').children().remove();
     const albums = await $.get(`${url}?userId=${userId}`);
 
     albums.map(album => {
-      $(`#${whichTable} > #albums`).append(`
+      $(`#${whichTable} > .albums`).append(`
         <div class='table__row album__row'
             id="${album.id}"
             data-value="${album}" draggable="true" ondragstart="drag(event)">
@@ -120,16 +120,16 @@ const drop = async ev => {
 
   [...multiSelect].map(async albumId => {
     const droppedAlbum = await swapAlbum(userId, albumId);
-    $(`#${dropZone.id} > #albums`).append($(`#${droppedAlbum.id}`));
+    $(`#${dropZone.id} > .albums`).append($(`#${droppedAlbum.id}`));
   });
   droppedAlbum = await swapAlbum(userId, data);
-  $(`#${dropZone.id} > #albums`).append($(`#${droppedAlbum.id}`));
+  $(`#${dropZone.id} > .albums`).append($(`#${droppedAlbum.id}`));
 
   $('.table').removeClass('drop__zone');
   multiSelect = new Set();
   $(`#${droppedAlbum.id}`).addClass('selected');
   setTimeout(() => $('.album__row').removeClass('selected'), 600);
-
-  $(`#${dropZone.id} > #albums`).animate({
+console.log(dropZone.id)
+  $(`#${dropZone.id} > .albums`).animate({
     scrollTop: 1000 }, 'slow')
 }
